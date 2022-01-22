@@ -60,6 +60,7 @@ exports.login_post = async (req, res) => {
       message: "Successful authentication",
       success: true,
       userToken: token,
+      user: user,
     });
   } catch (err) {
     res.status(500).send({
