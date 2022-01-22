@@ -25,6 +25,9 @@ const userSchema = new Schema({
   totalVote: {
     type: Number,
   },
+  picture: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

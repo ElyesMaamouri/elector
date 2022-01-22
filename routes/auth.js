@@ -5,4 +5,9 @@ module.exports = (app, pathApi) => {
 
     userControl.signup_post
   );
+  app.post(
+    pathApi + "/login",
+
+    userControl.login_post
+  );
 };
