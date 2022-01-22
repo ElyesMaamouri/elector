@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+const socketEvents = require("../utils/socket");
 exports.vote_patch = async (req, res) => {
   try {
     const user = await User.findOne({ cinId: req.body.cinId });
@@ -12,11 +12,14 @@ exports.vote_patch = async (req, res) => {
     if (!user.isVoted) {
       const candidate = await User.findById(req.params.id);
 
-      console.log(candidate);
-      const addVote = await User.updateOne(
+      const addVote = await User.findOneAndUpdate(
         { _id: req.params.id },
-        { $set: { totalVote: candidate.totalVote + 1 } }
+        { $set: { totalVote: candidate.totalVote + 1 } },
+        { new: true }
       );
+      //socket fire
+      console.log(addVote.totalVote);
+      socketEvents.addvote(addVote.totalVote);
       const elector = await User.findOneAndUpdate(
         { cinId: req.body.cinId },
         { isVoted: true }
