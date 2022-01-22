@@ -5,7 +5,7 @@ exports.vote_patch = async (req, res) => {
     const user = await User.findOne({ cinId: req.body.cinId });
     if (user.isVoted) {
       return res.status(200).send({
-        message: "user voted",
+        message: "user voted done",
         success: false,
       });
     }
@@ -19,7 +19,7 @@ exports.vote_patch = async (req, res) => {
         { isVoted: true }
       );
       return res.status(201).send({
-        message: "Vote acceptes",
+        message: "Vote accepted",
         success: true,
       });
     }
