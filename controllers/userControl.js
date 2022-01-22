@@ -96,3 +96,27 @@ exports.updateUser_patch = async (req, res) => {
     });
   }
 };
+exports.getUserById_get = async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.params.id });
+    console.log(user);
+    if (!user) {
+      return res.status(404).send({
+        message: "user not found",
+        success: false,
+      });
+    }
+    if (user) {
+      return res.status(200).send({
+        message: "user is here",
+        success: false,
+        user: user,
+      });
+    }
+  } catch (err) {
+    return res.status(500).send({
+      message: "Error occurred  get user by id" + err,
+      success: false,
+    });
+  }
+};
