@@ -19,7 +19,7 @@ exports.vote_patch = async (req, res) => {
       );
       //socket fire
       console.log(addVote.totalVote);
-      socketEvents.addvote(addVote.totalVote);
+      socketEvents.addvote(addVote);
       const elector = await User.findOneAndUpdate(
         { cinId: req.body.cinId },
         { isVoted: true }
