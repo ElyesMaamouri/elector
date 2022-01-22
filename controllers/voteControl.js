@@ -4,15 +4,18 @@ exports.vote_patch = async (req, res) => {
   try {
     const user = await User.findOne({ cinId: req.body.cinId });
     if (user.isVoted) {
-      return res.status(200).send({
-        message: "user voted done",
+      return res.status(500).send({
+        message: "user has been voted ",
         success: false,
       });
     }
     if (!user.isVoted) {
-      const addVote = await User.findByIdAndUpdate(
+      const candidate = await User.findById(req.params.id);
+
+      console.log(candidate);
+      const addVote = await User.updateOne(
         { _id: req.params.id },
-        { $set: { totalVote: totalVote + 1 } }
+        { $set: { totalVote: candidate.totalVote + 1 } }
       );
       const elector = await User.findOneAndUpdate(
         { cinId: req.body.cinId },
@@ -25,7 +28,7 @@ exports.vote_patch = async (req, res) => {
     }
   } catch (err) {
     return res.status(500).send({
-      message: "Error occurred register" + err,
+      message: "Error occurred vote" + err,
       success: false,
     });
   }
