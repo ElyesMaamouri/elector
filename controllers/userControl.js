@@ -54,41 +54,52 @@ exports.removeUser_delete = async (req, res) => {
 exports.updateUser_patch = async (req, res) => {
   console.log("idd", req.params.id);
   try {
-    const id = req.params.id;
-    const user = await User.findById(id);
-    console.log(user);
-    if (user.cinId === req.body.cinId) {
+    const userCin = await User.findById(req.params.id);
+
+    const cinSearched = await User.findOne({ cinId: req.body.cinId });
+
+    if (userCin.cinId === cinSearched.cinId) {
       return res.status(500).send({
-        message: "Cin exist",
+        message: "Cin existe",
         success: false,
       });
     }
+    // if (userCin === cinSearched))
+    // const id = req.params.id;
+    // const user = await User.findById(id);
+    // console.log(user);
+    // if (user.cinId === req.body.cinId) {
+    //   return res.status(500).send({
+    //     message: "Cin exist",
+    //     success: false,
+    //   });
+    // }
 
-    const newUpdate = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      cinId: req.body.cinId,
-      roles: req.body.roles,
-    };
-    await User.updateOne({ _id: req.params.id }, { $set: newUpdate }).then(
-      (data) => {
-        if (data) {
-          return res.status(201).send({
-            message: "user updated",
-            success: true,
-          });
-        }
+    // const newUpdate = {
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,
+    //   cinId: req.body.cinId,
+    //   roles: req.body.roles,
+    // };
+    // await User.updateOne({ _id: req.params.id }, { $set: newUpdate }).then(
+    //   (data) => {
+    //     if (data) {
+    //       return res.status(201).send({
+    //         message: "user updated",
+    //         success: true,
+    //       });
+    //     }
 
-        // await User.findByIdAndUpdate({ _id: id, newUpdate }).then((data) => {
-        //   if (data) {
-        //     return res.status(201).send({
-        //       message: "user updated",
-        //       success: true,
-        //     });
-        //   }
-        // });
-      }
-    );
+    //     // await User.findByIdAndUpdate({ _id: id, newUpdate }).then((data) => {
+    //     //   if (data) {
+    //     //     return res.status(201).send({
+    //     //       message: "user updated",
+    //     //       success: true,
+    //     //     });
+    //     //   }
+    //     // });
+    //   }
+    // );
   } catch (err) {
     return res.status(500).send({
       message: "An error occurred updating your profile :" + err,
