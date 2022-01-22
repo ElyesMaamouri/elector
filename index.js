@@ -24,6 +24,8 @@ mongoose
 
 //Routes
 require("./routes/auth")(app, "/api");
+require("./routes/vote")(app, "/api");
+require("./routes/user")(app, "/api");
 server.listen(4002, () => {
   console.log("listening on *:4002");
 });

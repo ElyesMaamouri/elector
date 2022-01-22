@@ -7,7 +7,7 @@ exports.signup_post = async (req, res) => {
     const user = await User.findOne({ cinId: req.body.cinId });
     console.log(user);
     if (user) {
-      return res.status(200).send({
+      return res.status(500).send({
         message: "Sorry! User exisite",
         success: false,
       });
